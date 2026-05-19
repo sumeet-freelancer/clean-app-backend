@@ -1,0 +1,12 @@
+services:
+  - type: worker
+    name: clean-app-report-worker
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python report_worker.py --poll-interval 60
+    envVars:
+      - key: FIREBASE_STORAGE_BUCKET
+        value: seiso-app-5d532.firebasestorage.app
+      - key: FIREBASE_SERVICE_ACCOUNT_JSON
+        sync: false
+

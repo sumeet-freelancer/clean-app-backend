@@ -1,0 +1,15 @@
+[
+  {
+    "id": "regular-cleaning-weekly",
+    "label": "定期清掃報告書",
+    "description": "週1回・7枚写真構成のExcel報告書テンプレート",
+    "outputPrefix": "定期清掃報告書",
+    "format": "excel-weekly-7-photo",
+    "templatePath": "report_templates/regular-cleaning-template.xlsx",
+    "samplePath": "report_templates/regular-cleaning-sample.xlsx",
+    "summarySheetName": "定期清掃報告書",
+    "weekSheetNames": ["1週目", "2週目", "3週目", "4週目"],
+    "photosPerWeek": 7,
+    "enabled": true
+  }
+]
