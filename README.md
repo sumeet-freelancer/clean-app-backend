@@ -7,6 +7,7 @@ The frontend creates documents in the `reportJobs` collection. This worker reads
 ## Files
 
 - `report_worker.py`: Firestore job worker.
+- `admin_api.py`: Admin API for creating staff/admin Firebase Auth users and applying custom claims.
 - `report_generation_engine.py`: Excel template filling logic.
 - `report-templates.json`: report template metadata used by the worker.
 - `report_templates/regular-cleaning-template.xlsx`: Excel template file.
@@ -51,7 +52,32 @@ python report_worker.py --poll-interval 60
 
 ## Render
 
-Recommended service type: Background Worker.
+Recommended services:
+
+- Web Service: staff/admin user creation API.
+- Background Worker: report generation worker.
+
+### Web Service
+
+Build command:
+
+```bash
+pip install -r requirements.txt
+```
+
+Start command:
+
+```bash
+gunicorn admin_api:app
+```
+
+Required environment variables:
+
+- `FIREBASE_SERVICE_ACCOUNT_JSON`
+- `FIREBASE_STORAGE_BUCKET`
+- `ALLOWED_ORIGINS`
+
+### Background Worker
 
 Build command:
 
@@ -64,4 +90,3 @@ Start command:
 ```bash
 python report_worker.py --poll-interval 60
 ```
-

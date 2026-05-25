@@ -1,5 +1,4 @@
 import argparse
-import json
 import os
 import shutil
 import time
@@ -7,16 +6,14 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import firebase_admin
-from firebase_admin import credentials, firestore, storage
+from firebase_admin import firestore, storage
 
+from firebase_setup import init_firebase
 from report_generation_engine import generate_report
 
 ROOT = Path(__file__).resolve().parent
-SERVICE_ACCOUNT_PATH = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-SERVICE_ACCOUNT_JSON = os.getenv("FIREBASE_SERVICE_ACCOUNT_JSON")
 TEMPLATE_CONFIG_PATH = Path(os.getenv("REPORT_TEMPLATES_CONFIG", ROOT / "report-templates.json"))
 WORK_ROOT = ROOT / "_report_jobs"
-BUCKET_NAME = os.getenv("FIREBASE_STORAGE_BUCKET", "seiso-app-5d532.firebasestorage.app")
 JST = timezone(timedelta(hours=9))
 MAX_WEEKS = 4
 MAX_PHOTOS_PER_WEEK = 7
@@ -54,20 +51,6 @@ def to_jst_date(timestamp_value):
     else:
         dt = timestamp_value
     return dt.astimezone(JST).date()
-
-
-def init_firebase():
-    if firebase_admin._apps:
-        return
-    if SERVICE_ACCOUNT_JSON:
-        cred = credentials.Certificate(json.loads(SERVICE_ACCOUNT_JSON))
-    elif SERVICE_ACCOUNT_PATH:
-        cred = credentials.Certificate(SERVICE_ACCOUNT_PATH)
-    else:
-        raise RuntimeError(
-            "Set FIREBASE_SERVICE_ACCOUNT_JSON or GOOGLE_APPLICATION_CREDENTIALS before starting the worker."
-        )
-    firebase_admin.initialize_app(cred, {"storageBucket": BUCKET_NAME})
 
 
 def fetch_jobs(db, args):

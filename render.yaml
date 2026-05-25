@@ -1,4 +1,17 @@
 services:
+  - type: web
+    name: clean-app-backend-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn admin_api:app
+    envVars:
+      - key: FIREBASE_STORAGE_BUCKET
+        value: seiso-app-5d532.firebasestorage.app
+      - key: ALLOWED_ORIGINS
+        value: https://seiso-app-5d532.web.app,https://seiso-app-5d532.firebaseapp.com
+      - key: FIREBASE_SERVICE_ACCOUNT_JSON
+        sync: false
+
   - type: worker
     name: clean-app-report-worker
     runtime: python
@@ -9,4 +22,3 @@ services:
         value: seiso-app-5d532.firebasestorage.app
       - key: FIREBASE_SERVICE_ACCOUNT_JSON
         sync: false
-

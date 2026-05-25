@@ -1,3 +1,5 @@
 firebase-admin
+Flask
+gunicorn
 openpyxl
 Pillow
