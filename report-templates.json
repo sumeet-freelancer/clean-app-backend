@@ -11,5 +11,24 @@
     "weekSheetNames": ["1週目", "2週目", "3週目", "4週目"],
     "photosPerWeek": 7,
     "enabled": true
+  },
+  {
+    "id": "visual-inspection-monthly-pptx",
+    "label": "目視点検報告書",
+    "description": "外観・駐車場・駐輪場・共用部などの項目別PowerPoint報告書テンプレート",
+    "outputPrefix": "目視点検報告書",
+    "format": "pptx-visual-inspection",
+    "templatePath": "report_templates/visual-inspection-template.pptx",
+    "samplePath": "report_templates/visual-inspection-sample.pptx",
+    "photoSections": [
+      { "id": "exterior", "label": "外観", "maxPhotos": 1, "required": true, "orientation": "landscape" },
+      { "id": "parking", "label": "駐車場", "maxPhotos": 4, "required": false },
+      { "id": "bicycle", "label": "駐輪場", "maxPhotos": 4, "required": false },
+      { "id": "entrance", "label": "エントランス等", "maxPhotos": 6, "required": false },
+      { "id": "floor", "label": "フロア", "maxPhotos": 6, "required": true },
+      { "id": "stairs", "label": "階段", "maxPhotos": 6, "required": false },
+      { "id": "mailbox_garbage_bulletin", "label": "ポスト・ゴミ庫・掲示板等", "maxPhotos": 5, "required": false }
+    ],
+    "enabled": true
   }
 ]

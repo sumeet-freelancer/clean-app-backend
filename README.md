@@ -2,15 +2,17 @@
 
 Backend worker for processing cleaning report generation jobs from Firebase Firestore.
 
-The frontend creates documents in the `reportJobs` collection. This worker reads queued jobs, downloads report photos from Firebase Storage, fills the Excel report template, uploads the generated file back to Firebase Storage, and updates the job status.
+The frontend creates documents in the `reportJobs` collection. This worker reads queued jobs, downloads report photos from Firebase Storage, fills the selected report template, uploads the generated file back to Firebase Storage, and updates the job status.
 
 ## Files
 
 - `report_worker.py`: Firestore job worker.
 - `admin_api.py`: Admin API for creating staff/admin Firebase Auth users and applying custom claims.
 - `report_generation_engine.py`: Excel template filling logic.
+- `report_generation_pptx.py`: PowerPoint visual inspection report filling logic.
 - `report-templates.json`: report template metadata used by the worker.
 - `report_templates/regular-cleaning-template.xlsx`: Excel template file.
+- `report_templates/visual-inspection-template.pptx`: PowerPoint template file.
 - `requirements.txt`: Python dependencies.
 - `render.yaml`: Render background worker configuration.
 
@@ -23,6 +25,11 @@ Set these in Render or the hosting environment:
 - `REPORT_TEMPLATES_CONFIG`: optional. Defaults to `report-templates.json`.
 
 Do not commit Firebase service account JSON files to this repository.
+
+## Supported Report Types
+
+- `regular-cleaning-weekly` / `excel-weekly-7-photo`: Existing Excel report with up to 7 photos per weekly sheet.
+- `visual-inspection-monthly-pptx` / `pptx-visual-inspection`: PowerPoint report using sectioned photos. Photos must include `reportSection` and `reportOrder` metadata in each record photo entry.
 
 ## Local Test
 

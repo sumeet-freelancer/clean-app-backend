@@ -3,3 +3,4 @@ Flask
 gunicorn
 openpyxl
 Pillow
+python-pptx
