@@ -256,9 +256,9 @@ def process_job(db, bucket, templates, doc):
         if template_format == PPTX_VISUAL_INSPECTION_FORMAT:
             section_entries, matched_records = build_section_entries(records, job_data, template)
             if not matched_records:
-                raise RuntimeError("report job matched no report-enabled records")
+                raise RuntimeError("対象月・物件・スタッフに一致する報告書用記録が見つかりません")
             if not any(entry["photo_paths"] for entry in section_entries):
-                raise RuntimeError("report job matched no sectioned report photos")
+                raise RuntimeError("対象の報告書用写真が見つかりません")
 
             materialized_sections = materialize_section_entries(bucket, section_entries, job_dir)
             photo_count = sum(len(entry["photos"]) for entry in materialized_sections)
@@ -272,7 +272,9 @@ def process_job(db, bucket, templates, doc):
         else:
             grouped_entries, matched_records = build_week_entries(records, job_data)
             if not grouped_entries:
-                raise RuntimeError("report job matched no report-enabled records")
+                raise RuntimeError("対象月・物件・スタッフに一致する報告書用記録が見つかりません")
+            if not any(entry["photo_paths"] for entry in grouped_entries):
+                raise RuntimeError("対象の報告書用写真が見つかりません")
 
             week_entries = materialize_week_entries(bucket, grouped_entries, job_dir)
             photo_count = sum(len(entry["photos"]) for entry in week_entries)
